@@ -4,119 +4,41 @@
     <meta charset="UTF-8">
     <title>Library Management Calendar</title>
 
-    <script src=jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.jsscript>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
 
     <style>
         body {
-            margin: 0;
-            padding: 30px;
-            background: #f4f6f9;
-            font-family: Segoe UI, Arial, sans-serif;
-        }
-
-        .calendar-container {
-            max-width: 1400px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #1e3a8a;
-            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
 
         #calendar {
-            width: 100%;
-        }
-
-        .fc-toolbar-title {
-            color: #1e293b;
-            font-weight: 600;
-        }
-
-        .fc-button-primary {
-            background-color: #2563eb !important;
-            border-color: #2563eb !important;
-        }
-
-        .fc-button-primary:hover {
-            background-color: #1d4ed8 !important;
-            border-color: #1d4ed8 !important;
-        }
-
-        .fc-day-today {
-            background: #eff6ff !important;
-        }
-
-        .fc-event {
-            border: none;
-            border-radius: 6px;
-            padding: 2px;
-            font-size: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
 
-<div class="calendar-container">
-
-    <h1>Library Events Calendar</h1>
-
     <div id="calendar"></div>
 
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
 
-<script>
+            const calendarEl = document.getElementById('calendar');
 
-document.addEventListener('DOMContentLoaded', function () {
-
-    fetch('https://dev.getworkvue.com/prod1/api2/custom/library-events')
-        .then(response => response.json())
-        .then(data => {
-
-            const events = JSON.parse(data.results);
-
-            const calendar = new FullCalendar.Calendar(
-                document.getElementById('calendar'),
-                {
-                    initialView: 'dayGridMonth',
-
-                    height: 'auto',
-
-                    headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                    },
-
-                    events: events,
-
-                    eventClick: function(info) {
-
-                        alert(
-                            'Event: ' + info.event.title +
-                            '\nDate: ' + info.event.start
-                        );
-
-                    }
-
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next Today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 }
-            );
+            });
 
             calendar.render();
-
-        })
-        .catch(error => {
-            console.error(error);
-            alert('Unable to load calendar events.');
         });
-
-});
-</script>
+    </script>
 
 </body>
 </html>
