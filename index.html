@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Library Calendar</title>
+
+    6.1.19/index.global.min.css" rel="stylesheet">
+
+    ://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #calendar {
+            max-width: 1200px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div id="calendar"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    fetch('https://dev.getworkvue.com/prod1/api2/custom/library-events')
+        .then(response => response.json())
+        .then(data => {
+
+            const events = JSON.parse(data.results);
+
+            const calendar = new FullCalendar.Calendar(
+                document.getElementById('calendar'),
+                {
+                    initialView: 'dayGridMonth',
+
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+
+                    events: events
+                }
+            );
+
+            calendar.render();
+        });
+});
+</script>
+
+</body>
+</html>
