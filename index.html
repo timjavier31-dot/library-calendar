@@ -22,23 +22,45 @@
 
     <div id="calendar"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+  <script>
+document.addEventListener('DOMContentLoaded', async function () {
 
-            const calendarEl = document.getElementById('calendar');
+    const response = await fetch(
+        'https://dev.getworkvue.com/prod1/api2/custom/library-events'
+    );
 
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }
-            });
+    const data = await response.json();
 
-            calendar.render();
-        });
-    </script>
+    const events = JSON.parse(data.results);
+
+    const calendar = new FullCalendar.Calendar(
+        document.getElementById('calendar'),
+        {
+            initialView: 'dayGridMonth',
+
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+
+            events: events,
+
+            eventClick: function(info) {
+
+                alert(
+                    'Title: ' + info.event.title +
+                    '\nDate: ' + info.event.start
+                );
+
+            }
+        }
+    );
+
+    calendar.render();
+
+});
+</script>
 
 </body>
 </html>
